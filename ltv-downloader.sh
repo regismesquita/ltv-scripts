@@ -1,5 +1,12 @@
 #!/bin/sh
 
+#
+# ltv-downloader.sh
+#
+# Baixa legendas do site legendas.tv.
+# Mais informações no arquivo README
+#
+
 USER="$1"
 PASSWORD="$2"
 URL="$3&c=1"
@@ -12,25 +19,25 @@ SUBTITLE_FILE=`mktemp $SUBTITLE_DIR/subtitle-XXXXXXXXX`
 curl --silent --show-error --data "txtLogin=${USER}&txtSenha=${PASSWORD}" http://legendas.tv/login_verificar.php --cookie-jar $COOKIEFILE >> /dev/null
 curl --silent --show-error --cookie $COOKIEFILE --location "$URL" -o "$SUBTITLE_FILE" >> /dev/null
 
-echo Subtitle downloaded to $SUBTITLE_FILE. Trying to uncompress...
+echo Legenda baixada para o arquivo $SUBTITLE_FILE. Tentando descomprimir...
 
 FORMAT=`file -b $SUBTITLE_FILE | awk '{ print $1 }'`
 
 if [ "$FORMAT" == "RAR" ]; then
-    echo "Uncompressing with unrar..."
+    echo "Formato detectado: RAR. Tentando descomprimir com unrar..."
     unrar x -inul -o+ "$SUBTITLE_FILE" "$DIRECTORY"
     if [ $? == 0 ]; then
-        echo "Subtitles uncompressed to $DIRECTORY!"
+        echo "Legendas descomprimidas para $DIRECTORY!"
         rm "$SUBTITLE_FILE"
     else   
-        echo "Error trying to uncompress $SUBTITLE_FILE"
+        echo "Erro ao tentar descomprimir o arquivo $SUBTITLE_FILE"
     fi
 
 #
 # TODO: ZIP files
 elif [ "$FORMAT" == "ZIP" ]; then
-    echo ZIP format not supported yet.
-    echo Your subtitle is at $SUBTITLE_FILE
+    echo Formato ZIP não suportado ainda.
+    echo Sua legenda está em $SUBTITLE_FILE
 fi
 
 
