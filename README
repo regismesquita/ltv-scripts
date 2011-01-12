@@ -1,5 +1,7 @@
-ltv-downloader
---------------
+ltv-scripts
+-----------
+Esdras Beleza, ltv_scripts at contato.esdrasbeleza.com
+
 
 Requisitos:
 - unrar
@@ -50,6 +52,8 @@ O leitor RSS usa 2 arquivos de configuração: ltv-account.cfg e ltv-feeds.cfg.
      as legendas serão descompactadas no campo "dir", e a partir de quais
      temporada e episódio iniciais o script deve baixar (campos "season" e
      "episode").
+
+
     
 2. Executando
 -------------
@@ -57,4 +61,22 @@ O leitor RSS usa 2 arquivos de configuração: ltv-account.cfg e ltv-feeds.cfg.
 Para executar, você deve rodar o comando ./ltv-feedparser.py .
 Você pode colocar esse comando na sua crontab para executar várias vezes ao dia.
 
+
+
+3. Pendências / TODO 
+--------------------
+
+Os dois scripts estão com algumas funcionalidades pendentes. São eles:
+
+    Leitor RSS:
+      - Verificar se temos os campos necessarios no arquivo de configuração
+        ltv-feeds.cfg
+      - Baixar apenas as series da temporada/episodio iguais ou acima aos
+        que o usuario configurou
+      - Armazenar quais legendas já foram baixadas e nao baixa-las de novo
+      
+      
+    Script para baixar e descompactar legenda:
+      - Suporte a arquivos ZIP
+      
 
