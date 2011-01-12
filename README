@@ -1,6 +1,14 @@
 ltv-downloader
 --------------
 
+Requisitos:
+- unrar
+- unzip
+- GNU mktemp
+- Python 2.x (ainda não compatível com Python 3.x)
+- Python feedparser (http://www.feedparser.org/)
+
+
 Esses scripts têm a finalidade de baixar legendas a partir do site legendas.tv.
 A aplicação é feita de 2 componentes:
 
@@ -11,20 +19,42 @@ O leitor RSS acompanha o feed RSS do site legendas.tv e o processa, de acordo
 com seus arquivos de configuração. O script baixa as legendas e as descomprime
 num diretório.
 
-O leitor RSS ainda não está implementado. :)
+1. Configurando
+---------------
 
-O script tem a seguinte sintaxe:
+O leitor RSS usa 2 arquivos de configuração: ltv-account.cfg e ltv-feeds.cfg.
 
-./download_subtitle.sh <usuario> <senha> <URL> <diretório para descomprimir>
+  1.1. ltv-account.cfg
+  
+        Nesse arquivo, você deve colocar seu login e senha do legendas.tv.
 
-Todos os parâmetros são obrigatórios, e é necessário usar seu usuário e senha
-do legendas.tv.
+  1.2. ltv-feeds.cfg
+
+     O arquivo ltv-account.cfg tem o seguinte formato:
+     
+        [MinhaSerieFavorita]
+        name=^[N]ome[._ ]da[Ss]erie[._ ]1
+        dir=/home/usuario/series/serie1
+        season=1
+        episode=4
+        
+        [OutraSerie]
+        name=^[N]ome[._ ]da[Ss]erie[._ ]2
+        dir=/home/usuario/series/serie2
+        season=2
+        episode=5
+
+     Você precisa especificar várias seções, cada uma correspondente
+     a uma série. Em cada seção, você deve colocar, no campo "name", uma
+     expressão regular para verificar o nome da série, o diretório para onde
+     as legendas serão descompactadas no campo "dir", e a partir de quais
+     temporada e episódio iniciais o script deve baixar (campos "season" e
+     "episode").
+    
+2. Executando
+-------------
+
+Para executar, você deve rodar o comando ./ltv-feedparser.py .
+Você pode colocar esse comando na sua crontab para executar várias vezes ao dia.
 
 
-Requisitos
-----------
-- unrar
-- unzip
-- GNU mktemp
-- Python 2.x (ainda não compatível com Python 3.x)
-- Python feedparser (http://www.feedparser.org/)
