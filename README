@@ -21,3 +21,10 @@ Todos os parâmetros são obrigatórios, e é necessário usar seu usuário e se
 do legendas.tv.
 
 
+Requisitos
+----------
+- unrar
+- unzip
+- GNU mktemp
+- Python 2.x (ainda não compatível com Python 3.x)
+- Python feedparser (http://www.feedparser.org/)
