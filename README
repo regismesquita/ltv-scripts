@@ -1,0 +1,23 @@
+ltv-downloader
+--------------
+
+Esses scripts têm a finalidade de baixar legendas a partir do site legendas.tv.
+A aplicação é feita de 2 componentes:
+
+1. Leitor RSS
+2. Script para baixar legendas
+
+O leitor RSS acompanha o feed RSS do site legendas.tv e o processa, de acordo
+com seus arquivos de configuração. O script baixa as legendas e as descomprime
+num diretório.
+
+O leitor RSS ainda não está implementado. :)
+
+O script tem a seguinte sintaxe:
+
+./download_subtitle.sh <usuario> <senha> <URL> <diretório para descomprimir>
+
+Todos os parâmetros são obrigatórios, e é necessário usar seu usuário e senha
+do legendas.tv.
+
+
