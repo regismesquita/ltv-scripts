@@ -51,7 +51,8 @@ try:
             section_dir  = config.get(str(section), "dir")
             pattern = re.compile(section_name)
             if pattern.match(item['title']):
-                print "ltv-downloader.sh \"" + ltv_username + "\" \"" + ltv_password + "\" \"" + item['link'] + "\" \"" + section_dir + "\""
+                cmd = "./ltv-downloader.sh \"" + ltv_username + "\" \"" + ltv_password + "\" \"" + item['link'] + "\" \"" + section_dir + "\""
+                os.system(cmd)
 
     
 except:
