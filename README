@@ -4,12 +4,12 @@ Esdras Beleza, ltv_scripts at contato.esdrasbeleza.com
 
 
 Requisitos:
+- bash
 - unrar
 - unzip
 - GNU mktemp
 - Python 2.x (ainda não compatível com Python 3.x)
 - Python feedparser (http://www.feedparser.org/)
-
 
 Esses scripts têm a finalidade de baixar legendas a partir do site legendas.tv.
 A aplicação é feita de 2 componentes:
@@ -20,6 +20,9 @@ A aplicação é feita de 2 componentes:
 O leitor RSS acompanha o feed RSS do site legendas.tv e o processa, de acordo
 com seus arquivos de configuração. O script baixa as legendas e as descomprime
 num diretório.
+
+** Esses scripts não vão rodar em sistemas Windows. **
+
 
 1. Configurando
 ---------------
