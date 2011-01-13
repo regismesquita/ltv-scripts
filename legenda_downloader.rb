@@ -1,4 +1,5 @@
 #CONFIGURE
+# Voce não precisa preencher os campos abaixo se tiver o arquivo ltv-account.cfg ;)
 #
 USUARIO = 'user'
 SENHA = 'senha'
@@ -10,8 +11,16 @@ require 'uri'
 class LegendaDownloader
 
   def initialize
-    @login = USUARIO
-    @senha = SENHA
+    if File.exists?('ltv-account.cfg')
+      File.open('ltv-account.cfg').read.each_line do |line| 
+        line = line.split('=')
+        if line[0] == 'username' then @login = line[1] end
+        if line[0] == 'password' then @senha = line[1] end
+      end
+    else
+      @login = USUARIO
+      @senha = SENHA
+    end
   end
   def login
     if $standalone then puts 'Logando no site' end
@@ -61,7 +70,7 @@ class LegendaDownloader
     when Net::HTTPSuccess, Net::HTTPRedirection
       link = res['location']
       return '/' << link
-   else
+    else
       raise res.error!
     end
   end

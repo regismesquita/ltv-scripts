@@ -33,7 +33,7 @@ ruby legenda_downloader.rb "The Matrix"
 1. Configurando
 ---------------
 
-Para Configurar o script ruby , abra o arquivo e altere as primeiras linhas colocando seu usuario e senha no lugar do texto entre as aspas.
+O Script Ruby usa apenas o arquivo ltv-account.cfg , que você pode configurar conforme instruções abaixo.
 
 O leitor RSS usa 2 arquivos de configuração: ltv-account.cfg e ltv-feeds.cfg.
 
