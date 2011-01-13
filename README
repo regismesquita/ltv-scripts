@@ -10,22 +10,30 @@ Requisitos:
 - GNU mktemp
 - Python 2.x (ainda não compatível com Python 3.x)
 - Python feedparser (http://www.feedparser.org/)
+- ruby
 
 Esses scripts têm a finalidade de baixar legendas a partir do site legendas.tv.
-A aplicação é feita de 2 componentes:
+A aplicação é feita de 3 componentes:
 
 1. Leitor RSS
 2. Script para baixar legendas
+3. Script para buscar e baixar legendas baseada em uma busca
 
 O leitor RSS acompanha o feed RSS do site legendas.tv e o processa, de acordo
 com seus arquivos de configuração. O script baixa as legendas e as descomprime
 num diretório.
+
+O Script de busca recebe um comando como o informado abaixo e faz o download da legenda automagicamente. ;)
+
+ruby legenda_downloader.rb "The Matrix"
 
 ** Esses scripts não vão rodar em sistemas Windows. **
 
 
 1. Configurando
 ---------------
+
+Para Configurar o script ruby , abra o arquivo e altere as primeiras linhas colocando seu usuario e senha no lugar do texto entre as aspas.
 
 O leitor RSS usa 2 arquivos de configuração: ltv-account.cfg e ltv-feeds.cfg.
 
