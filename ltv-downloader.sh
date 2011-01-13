@@ -33,11 +33,15 @@ if [ "$FORMAT" == "RAR" ]; then
         echo "Erro ao tentar descomprimir o arquivo $SUBTITLE_FILE"
     fi
 
-#
-# TODO: ZIP files
-elif [ "$FORMAT" == "ZIP" ]; then
-    echo Formato ZIP não suportado ainda.
-    echo Sua legenda está em $SUBTITLE_FILE
+elif [ "$FORMAT" == "zip" ]; then
+    echo "Formato detectado: ZIP. Tentando descomprimir com unzip..."
+    unzip -q -o "$SUBTITLE_FILE" -d "$DIRECTORY"
+    if [ $? == 0 ]; then
+      echo "Legendas descomprimidas para $DIRECTORY!"
+      rm "$SUBTITLE_FILE"
+    else
+      echo "Erro ao tentar descomprimir o arquivo $SUBTITLE_FILE"
+    fi
 fi
 
 
