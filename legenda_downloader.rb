@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 #CONFIGURE
 # Voce não precisa preencher os campos abaixo se tiver o arquivo ltv-account.cfg ;)
 #
@@ -9,6 +10,7 @@ require 'net/http'
 require 'uri'
 
 class LegendaDownloader
+
 
   def initialize
     if File.exists?('ltv-account.cfg')
@@ -53,7 +55,10 @@ class LegendaDownloader
           lista_de_filmes[nome_do_release] = id_para_download
         end
       end
-      lista_de_filmes
+      lista_de_filmes.delete(nil)
+      lista_de_filmes= (1..lista_de_filmes.size).zip(lista_de_filmes)
+      lista_de_filmes = Hash[lista_de_filmes]
+
     else
       raise res.error!
     end
@@ -100,14 +105,37 @@ class LegendaDownloader
     #Pega a primeira legenda encontrada e baixa =P I'm Feeling Lucky.
     baixador = LegendaDownloader.new
     baixador.login
-    filme = baixador.buscar(filme).to_a[0]
+    filmes = baixador.buscar(filme)
     hash_do_filme = filme[1]
-    baixador.download(hash_do_filme)
+    if filmes.size == 0
+      puts filmes.inspect if ENV['DEBUG']
+      puts "Nenhum filme encontrado."
+      exit
+    else
+      puts "Filmes encontrados"
+      filmes.sort{|x,y|x[0]<=>y[0]}.each{|id,filme| puts "#{id} - #{filme[0]}"}
+      require 'scanf'
+      escolhas = nil
+      begin
+        print "Escolha que legenda baixar: "
+        escolhas = STDIN.gets.split(" ").map{|x| x.to_i}
+        escolhas.delete(0)
+        escolha = escolhas.first
+      end while escolha.class != Fixnum
+      exit if escolhas.first == -1
+      escolhas.each do |escolha|
+        hash_do_filme = filmes[escolha][1]
+        baixador.download(hash_do_filme)
+      end
+    end
   end
 end
 
 if ARGV.size != 0
   $standalone = true
-  puts "Buscando Legenda para #{ARGV[0]}"
-  LegendaDownloader.legenda_for(ARGV[0])
+  puts "Buscando Legenda para #{ARGV.join(" ")}"
+  LegendaDownloader.legenda_for(ARGV.join(" "))
+else
+  puts "Programa para download de legendas do legendas.tv"
+  puts "Uso.: legenda nome do filme"
 end
