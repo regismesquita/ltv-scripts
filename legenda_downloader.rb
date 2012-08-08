@@ -14,7 +14,7 @@ class LegendaDownloader
 
   def initialize
     if File.exists?('ltv-account.cfg')
-      File.open('ltv-account.cfg').read.each_line do |line| 
+      File.open('ltv-account.cfg').read.each_line do |line|
         line = line.split('=')
         if line[0] == 'username' then @login = line[1] end
         if line[0] == 'password' then @senha = line[1] end
@@ -50,7 +50,7 @@ class LegendaDownloader
       lista_de_filmes = Hash.new
       res.body.each_line do |line|
         if line.match(/abredown/) then
-          nome_do_release = line.split(',')[2]  
+          nome_do_release = line.split(',')[2]
           id_para_download = line.split('abredown(')[1].split('\'')[1]
           lista_de_filmes[nome_do_release] = id_para_download
         end
@@ -90,7 +90,7 @@ class LegendaDownloader
     res = Net::HTTP.new(url.host, url.port).start {|http| http.request(req) }
     case res
     when Net::HTTPSuccess, Net::HTTPRedirection
-      file = File.open(filename,'wb') 
+      file = File.open(filename,'wb')
       file.write(res.body)
       file.close
       if $standalone then puts "Legenda Salva em #{filename}" end
@@ -114,28 +114,32 @@ class LegendaDownloader
     else
       puts "Filmes encontrados"
       filmes.sort{|x,y|x[0]<=>y[0]}.each{|id,filme| puts "#{id} - #{filme[0]}"}
-      require 'scanf'
-      escolhas = nil
-      begin
-        print "Escolha que legenda baixar: "
-        escolhas = STDIN.gets.split(" ").map{|x| x.to_i}
-        escolhas.delete(0)
-        escolha = escolhas.first
-      end while escolha.class != Fixnum
-      exit if escolhas.first == -1
+      if filmes.size == 1
+          escolhas = [1]
+      else
+          require 'scanf'
+          escolhas = nil
+          begin
+              print "Escolha que legenda baixar: "
+              escolhas = STDIN.gets.split(" ").map{|x| x.to_i}
+              escolhas.delete(0)
+              escolha = escolhas.first
+          end while escolha.class != Fixnum
+          exit if escolhas.first == -1
+      end
       escolhas.each do |escolha|
-        hash_do_filme = filmes[escolha][1]
-        baixador.download(hash_do_filme)
+          hash_do_filme = filmes[escolha][1]
+          baixador.download(hash_do_filme)
       end
     end
   end
 end
 
 if ARGV.size != 0
-  $standalone = true
-  puts "Buscando Legenda para #{ARGV.join(" ")}"
-  LegendaDownloader.legenda_for(ARGV.join(" "))
+    $standalone = true
+    puts "Buscando Legenda para #{ARGV.join(" ")}"
+    LegendaDownloader.legenda_for(ARGV.join(" "))
 else
-  puts "Programa para download de legendas do legendas.tv"
-  puts "Uso.: legenda nome do filme"
+    puts "Programa para download de legendas do legendas.tv"
+    puts "Uso.: legenda nome do filme"
 end
